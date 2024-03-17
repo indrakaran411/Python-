@@ -1,0 +1,40 @@
+import random
+
+def main():
+    print("Welcome to Python Football Game!")
+    print("Try to score a goal against the opponent.")
+    
+    player_score = 0
+    opponent_score = 0
+    
+    while True:
+        input("Press Enter to kick the ball...")
+        
+        player_kick = random.randint(1, 6)  # Simulate player's kick
+        opponent_kick = random.randint(1, 6)  # Simulate opponent's kick
+        
+        print("\nYou kicked:", player_kick)
+        print("Opponent kicked:", opponent_kick)
+        
+        if player_kick > opponent_kick:
+            print("Goal! You scored!")
+            player_score += 1
+        elif player_kick < opponent_kick:
+            print("Opponent saved! No goal.")
+        else:
+            print("It's a draw! No goal.")
+        
+        print("Your score:", player_score)
+        print("Opponent's score:", opponent_score)
+        
+        if player_score >= 3:
+            print("\nCongratulations! You won!")
+            break
+        elif opponent_score >= 3:
+            print("\nSorry, you lost. Better luck next time!")
+            break
+        
+        print("\n--- Next round ---\n")
+
+if __name__ == "__main__":
+    main()
