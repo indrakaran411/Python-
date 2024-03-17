@@ -1,0 +1,50 @@
+import random
+
+class Ludo:
+    def __init__(self):
+        self.board = [0] * 52  # 0 represents empty space, 1-4 represents player tokens
+        self.players = ['Red', 'Green', 'Blue', 'Yellow']
+        self.home = {player: [i for i in range(1, 5)] for player in self.players}
+        self.winner = None
+
+    def move_token(self, player):
+        roll = random.randint(1, 6)
+        print(f"{player}'s turn. You rolled: {roll}")
+        token_to_move = input("Enter token to move (1-4): ")
+        token_to_move = int(token_to_move)
+        current_pos = self.board.index(player) if player in self.board else -1
+
+        if current_pos == -1:
+            if roll == 6:
+                self.board[token_to_move] = player
+            else:
+                print("You need a 6 to start.")
+        else:
+            new_pos = current_pos + roll
+            if new_pos <= 51:
+                self.board[current_pos] = 0
+                if self.board[new_pos] != 0:
+                    print(f"You bumped {self.board[new_pos]}!")
+                    self.home[self.board[new_pos]].append(new_pos)
+                self.board[new_pos] = player
+            else:
+                print("You need exact roll to reach home.")
+                return
+        print(self.board)
+        self.check_winner(player)
+
+    def check_winner(self, player):
+        if all(pos == 0 for pos in self.home[player]):
+            print(f"{player} has won!")
+            self.winner = player
+
+    def play(self):
+        while not self.winner:
+            for player in self.players:
+                self.move_token(player)
+                if self.winner:
+                    break
+
+if __name__ == "__main__":
+    game = Ludo()
+    game.play()
