@@ -1,0 +1,83 @@
+import random
+
+class UnoGame:
+    def __init__(self, players):
+        self.deck = self.create_deck()
+        self.players = players
+        self.hands = {player: self.draw_hand() for player in players}
+        self.current_player_index = 0
+        self.discard_pile = [self.deck.pop()]
+
+    def create_deck(self):
+        colors = ['Red', 'Blue', 'Green', 'Yellow']
+        values = list(range(1, 10)) + ['Skip', 'Reverse', 'Draw Two'] * 2
+        wild_cards = ['Wild', 'Wild Draw Four'] * 4
+        deck = [(color, value) for color in colors for value in values]
+        deck.extend([(None, card) for card in wild_cards])
+        random.shuffle(deck)
+        return deck
+
+    def draw_card(self):
+        return self.deck.pop() if self.deck else self.shuffle_discard_pile()
+
+    def shuffle_discard_pile(self):
+        top_card = self.discard_pile.pop()
+        self.deck.extend(self.discard_pile)
+        random.shuffle(self.deck)
+        self.discard_pile = [top_card]
+        return self.deck.pop()
+
+    def draw_hand(self):
+        return [self.draw_card() for _ in range(7)]
+
+    def play_card(self, player_index, card_index):
+        card = self.hands[self.players[player_index]][card_index]
+        top_card = self.discard_pile[-1]
+        if card[0] == top_card[0] or card[1] == top_card[1] or card[0] is None:
+            del self.hands[self.players[player_index]][card_index]
+            self.discard_pile.append(card)
+            return True
+        else:
+            return False
+
+    def next_player(self):
+        self.current_player_index = (self.current_player_index + 1) % len(self.players)
+
+    def get_current_player(self):
+        return self.players[self.current_player_index]
+
+    def print_status(self):
+        print(f"Top Card: {self.discard_pile[-1]}")
+        for player, hand in self.hands.items():
+            print(f"{player}'s Hand: {hand}")
+
+def play_uno():
+    num_players = int(input("Enter number of players: "))
+    players = [input(f"Enter name of player {i+1}: ") for i in range(num_players)]
+    game = UnoGame(players)
+
+    print("Welcome to UNO!")
+    print("Let's get started.")
+
+    while True:
+        game.print_status()
+        current_player = game.get_current_player()
+        print(f"\n{current_player}'s turn.")
+
+        for i, card in enumerate(game.hands[current_player]):
+            print(f"{i+1}: {card}")
+
+        card_index = int(input("Enter the index of the card you want to play (1-7): ")) - 1
+
+        if game.play_card(game.current_player_index, card_index):
+            print(f"{current_player} played a card.")
+            if len(game.hands[current_player]) == 0:
+                print(f"Congratulations! {current_player} wins!")
+                break
+        else:
+            print("Invalid move. Try again.")
+            continue
+
+        game.next_player()
+
+play_uno()

@@ -1,0 +1,43 @@
+import random
+
+class Player:
+    def __init__(self, name):
+        self.name = name
+        self.health = 100
+        self.strength = 10
+        self.defense = 5
+        self.gold = 0
+
+    def attack(self, enemy):
+        damage = random.randint(1, self.strength)
+        actual_damage = max(0, damage - enemy.defense)
+        enemy.health -= actual_damage
+        print(f"{self.name} attacks {enemy.name} and deals {actual_damage} damage.")
+
+    def is_alive(self):
+        return self.health > 0
+
+    def display_status(self):
+        print(f"{self.name}: Health: {self.health}, Gold: {self.gold}")
+
+def main():
+    player1 = Player("Player 1")
+    player2 = Player("Player 2")
+
+    while player1.is_alive() and player2.is_alive():
+        # Player 1's turn
+        player1.attack(player2)
+        player2.display_status()
+        if not player2.is_alive():
+            print("Player 1 wins!")
+            break
+
+        # Player 2's turn
+        player2.attack(player1)
+        player1.display_status()
+        if not player1.is_alive():
+            print("Player 2 wins!")
+            break
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,47 @@
+import random
+
+class CricketGame:
+    def __init__(self, overs):
+        self.overs = overs
+        self.target = 0
+        self.runs = 0
+        self.wickets = 0
+        self.balls_bowled = 0
+
+    def simulate_match(self):
+        for over in range(self.overs):
+            print(f"\nOver {over + 1}:")
+            for ball in range(6):
+                self.balls_bowled += 1
+                outcome = random.choice(['Dot', '1', '2', '3', '4', '6', 'Out'])
+                print(outcome, end=' ')
+                if outcome == 'Out':
+                    self.wickets += 1
+                    print("\nWicket!")
+                    break
+                else:
+                    self.runs += int(outcome) if outcome.isdigit() else 0
+                    if self.runs > self.target:
+                        print("\nCongratulations! You won!")
+                        return
+            self.show_score()
+
+    def set_target(self, target):
+        self.target = target
+
+    def show_score(self):
+        print(f"\nTotal Runs: {self.runs}/{self.wickets} in {self.balls_bowled} balls.")
+
+def play_cricket():
+    overs = int(input("Enter number of overs: "))
+    target = int(input("Enter target runs: "))
+
+    game = CricketGame(overs)
+    game.set_target(target)
+
+    print("Welcome to Cricket Game!")
+    print(f"Target: {target} runs in {overs} overs.")
+
+    game.simulate_match()
+
+play_cricket()
