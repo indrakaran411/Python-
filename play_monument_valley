@@ -1,0 +1,40 @@
+def print_maze(maze):
+    for row in maze:
+        print(' '.join(row))
+    print()
+
+def play_monument_valley():
+    maze = [
+        ['.', '.', '.', 'X', 'E'],
+        ['.', 'X', '.', 'X', '.'],
+        ['S', '.', '.', '.', '.'],
+        ['.', 'X', '.', 'X', '.'],
+        ['.', '.', '.', '.', '.']
+    ]
+    player_pos = [2, 0]
+    print_maze(maze)
+    
+    while True:
+        move = input("Enter move (w/a/s/d): ").strip().lower()
+        if move == 'w' and player_pos[0] > 0:
+            player_pos[0] -= 1
+        elif move == 's' and player_pos[0] < 4:
+            player_pos[0] += 1
+        elif move == 'a' and player_pos[1] > 0:
+            player_pos[1] -= 1
+        elif move == 'd' and player_pos[1] < 4:
+            player_pos[1] += 1
+        else:
+            print("Invalid move.")
+            continue
+
+        if maze[player_pos[0]][player_pos[1]] == 'X':
+            print("Hit a wall! Try again.")
+            continue
+        elif maze[player_pos[0]][player_pos[1]] == 'E':
+            print("Reached the end! Congratulations!")
+            return
+        
+        print_maze(maze)
+
+play_monument_valley()

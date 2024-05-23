@@ -1,0 +1,57 @@
+class Village:
+    def __init__(self):
+        self.resources = 100
+        self.troops = 0
+        self.defense_level = 1
+    
+    def build(self, building):
+        if building == "troop":
+            if self.resources >= 10:
+                self.troops += 1
+                self.resources -= 10
+                print("Trained a troop. Current troops:", self.troops)
+            else:
+                print("Not enough resources.")
+        elif building == "defense":
+            if self.resources >= 20:
+                self.defense_level += 1
+                self.resources -= 20
+                print("Upgraded defense. Current defense level:", self.defense_level)
+            else:
+                print("Not enough resources.")
+    
+    def attack(self):
+        print("Attacking another village...")
+        attack_power = self.troops * 10
+        if attack_power > 50:
+            print("Victory! Gained 30 resources.")
+            self.resources += 30
+        else:
+            print("Defeat! Lost 10 resources.")
+            self.resources -= 10
+
+def play_clash_of_clans():
+    village = Village()
+    print("Welcome to Clash of Clans (Text-Based)")
+    
+    while True:
+        print("\nCurrent resources:", village.resources)
+        print("1. Train troop (10 resources)")
+        print("2. Upgrade defense (20 resources)")
+        print("3. Attack")
+        print("4. Quit")
+        
+        choice = input("Enter your choice: ")
+        if choice == "1":
+            village.build("troop")
+        elif choice == "2":
+            village.build("defense")
+        elif choice == "3":
+            village.attack()
+        elif choice == "4":
+            print("Exiting game.")
+            break
+        else:
+            print("Invalid choice. Try again.")
+
+play_clash_of_clans()

@@ -1,0 +1,23 @@
+import random
+
+def generate_fruit():
+    fruits = ['apple', 'banana', 'cherry', 'bomb']
+    return random.choice(fruits)
+
+def play_fruit_ninja():
+    score = 0
+    for _ in range(10):
+        item = generate_fruit()
+        action = input(f"A {item} appears! Enter 'slice' to cut: ")
+        if action == 'slice' and item != 'bomb':
+            score += 1
+            print(f"Sliced a {item}! Score: {score}")
+        elif action == 'slice' and item == 'bomb':
+            print("Boom! You hit a bomb. Game over.")
+            return
+        else:
+            print("Missed!")
+    print(f"Game over! Your score: {score}")
+
+play_fruit_ninja()
+

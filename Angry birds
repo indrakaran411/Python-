@@ -1,0 +1,20 @@
+import random
+
+def launch_bird():
+    return random.randint(1, 10)
+
+def play_angry_birds():
+    pigs = 10
+    while pigs > 0:
+        print(f"Pigs remaining: {pigs}")
+        action = input("Enter 'launch' to shoot a bird: ")
+        if action == 'launch':
+            hit = launch_bird()
+            if hit >= 5:
+                pigs -= 1
+                print("Hit! A pig is down.")
+            else:
+                print("Missed! Try again.")
+    print("Congratulations! All pigs are down.")
+
+play_angry_birds()

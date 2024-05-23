@@ -1,0 +1,27 @@
+import random
+
+def play_plants_vs_zombies():
+    lawn = ['_'] * 10
+    zombie_positions = random.sample(range(5, 10), 3)
+    for pos in zombie_positions:
+        lawn[pos] = 'Z'
+    
+    print("Lawn: ", ' '.join(lawn))
+    print("Place plants to stop the zombies!")
+
+    while True:
+        plant_pos = int(input("Enter plant position (0-9): "))
+        if plant_pos in zombie_positions:
+            zombie_positions.remove(plant_pos)
+            lawn[plant_pos] = 'P'
+            print("Zombie stopped!")
+        else:
+            print("No zombie here. Try again.")
+
+        print("Lawn: ", ' '.join(lawn))
+        
+        if not zombie_positions:
+            print("All zombies stopped! You win!")
+            return
+
+play_plants_vs_zombies()

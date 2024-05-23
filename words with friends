@@ -1,0 +1,50 @@
+import random
+import string
+
+BOARD_SIZE = 5
+BOARD = [[' ' for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
+WORDS = ["apple", "bread", "crane", "droid", "eagle"]
+
+def print_board(board):
+    for row in board:
+        print(' '.join(row))
+    print()
+
+def place_word(board, word, row, col, direction):
+    if direction == 'h':
+        for i in range(len(word)):
+            board[row][col + i] = word[i]
+    elif direction == 'v':
+        for i in range(len(word)):
+            board[row + i][col] = word[i]
+
+def calculate_score(word):
+    return sum(ord(char) - ord('a') + 1 for char in word)
+
+def play_words_with_friends():
+    print("Welcome to Words With Friends (Text-Based)")
+    print_board(BOARD)
+    
+    while True:
+        word = input("Enter a word to place: ").strip().lower()
+        if word not in WORDS:
+            print("Invalid word. Try again.")
+            continue
+        
+        row, col = map(int, input("Enter starting row and column: ").split())
+        direction = input("Enter direction (h for horizontal, v for vertical): ").strip().lower()
+        
+        if direction not in ['h', 'v']:
+            print("Invalid direction. Try again.")
+            continue
+        
+        place_word(BOARD, word, row, col, direction)
+        print_board(BOARD)
+        
+        score = calculate_score(word)
+        print(f"Placed '{word}' for {score} points.")
+        
+        if input("Do you want to place another word? (y/n): ").strip().lower() != 'y':
+            break
+
+play_words_with_friends()
