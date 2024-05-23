@@ -1,0 +1,37 @@
+MOVES = [
+    "1. e4 e5",
+    "2. Nf3 Nc6",
+    "3. Bb5 a6",
+    "4. Ba4 Nf6",
+    "5. O-O Be7",
+    "6. Re1 b5",
+    "7. Bb3 d6",
+    "8. c3 O-O"
+]
+
+def print_moves(index):
+    for i in range(index + 1):
+        print(MOVES[i])
+
+def pgn_viewer():
+    current_move = 0
+    print_moves(current_move)
+    
+    while True:
+        command = input("Enter command (next/prev): ").strip().lower()
+        if command == "next":
+            if current_move < len(MOVES) - 1:
+                current_move += 1
+                print_moves(current_move)
+            else:
+                print("No more moves.")
+        elif command == "prev":
+            if current_move > 0:
+                current_move -= 1
+                print_moves(current_move)
+            else:
+                print("This is the first move.")
+        else:
+            print("Invalid command.")
+
+pgn_viewer()

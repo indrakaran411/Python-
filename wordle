@@ -1,0 +1,31 @@
+import random
+
+WORDS = ["apple", "bread", "crane", "droid", "eagle"]
+WORD = random.choice(WORDS)
+
+def print_feedback(guess, word):
+    feedback = []
+    for i, char in enumerate(guess):
+        if char == word[i]:
+            feedback.append("🟩")
+        elif char in word:
+            feedback.append("🟨")
+        else:
+            feedback.append("⬜")
+    print("".join(feedback))
+
+def play_wordle():
+    print("Guess the 5-letter word:")
+    for attempt in range(6):
+        guess = input().lower()
+        if len(guess) != 5:
+            print("Please enter a 5-letter word.")
+            continue
+        if guess == WORD:
+            print(f"Congratulations! You guessed the word: {WORD}")
+            return
+        else:
+            print_feedback(guess, WORD)
+    print(f"Sorry! The word was: {WORD}")
+
+play_wordle()

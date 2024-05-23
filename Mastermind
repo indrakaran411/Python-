@@ -1,0 +1,25 @@
+import random
+
+COLORS = ['R', 'G', 'B', 'Y', 'O', 'P']
+CODE = [random.choice(COLORS) for _ in range(4)]
+
+def print_feedback(guess, code):
+    black_pegs = sum(1 for i in range(4) if guess[i] == code[i])
+    white_pegs = sum(min(guess.count(j), code.count(j)) for j in set(COLORS)) - black_pegs
+    print(f"Black pegs: {black_pegs}, White pegs: {white_pegs}")
+
+def play_mastermind():
+    print("Guess the 4-color code (R, G, B, Y, O, P):")
+    
+    while True:
+        guess = input().upper()
+        if len(guess) != 4:
+            print("Please enter a 4-color code.")
+            continue
+        if list(guess) == CODE:
+            print(f"Congratulations! You guessed the code: {''.join(CODE)}")
+            return
+        else:
+            print_feedback(guess, CODE)
+
+play_mastermind()

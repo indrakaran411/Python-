@@ -1,0 +1,51 @@
+import random
+
+SIZE = 4
+BOARD = [[0 for _ in range(SIZE)] for _ in range(SIZE)]
+BLOCKED = [[False for _ in range(SIZE)] for _ in range(SIZE)]
+directions = {
+    'w': (-1, 0), 'a': (0, -1), 's': (1, 0), 'd': (0, 1)
+}
+
+def init_board():
+    BOARD[0][0] = 1
+    BOARD[0][1] = 1
+
+def place_blocked_cells():
+    BLOCKED[2][2] = True
+    BLOCKED[3][3] = True
+
+def print_board():
+    for i in range(SIZE):
+        for j in range(SIZE):
+            if BLOCKED[i][j]:
+                print("X ", end="")
+            else:
+                print(f"{BOARD[i][j]} ", end="")
+        print()
+    print()
+
+def move_board(direction):
+    if direction in directions:
+        dx, dy = directions[direction]
+        # Implement move logic here
+
+def place_random_number():
+    # Implement logic to place random Fibonacci number
+    pass
+
+def play_fibonacci_2048():
+    init_board()
+    place_blocked_cells()
+    print_board()
+    
+    while True:
+        move = input("Enter move (w/a/s/d): ").strip()
+        if move in directions:
+            move_board(move)
+            place_random_number()
+            print_board()
+        else:
+            print("Invalid move.")
+
+play_fibonacci_2048()

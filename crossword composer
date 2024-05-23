@@ -1,0 +1,31 @@
+SIZE = 5
+GRID = [[' ' for _ in range(SIZE)] for _ in range(SIZE)]
+
+def print_grid():
+    for row in GRID:
+        print(" ".join(row))
+    print()
+
+def place_word(word, row, col, direction):
+    if direction == 'h':
+        for i in range(len(word)):
+            GRID[row][col + i] = word[i]
+    elif direction == 'v':
+        for i in range(len(word)):
+            GRID[row + i][col] = word[i]
+
+def crossword_composer():
+    print_grid()
+    
+    while True:
+        word = input("Enter word: ").strip().upper()
+        row, col = map(int, input("Enter starting row and column: ").strip().split())
+        direction = input("Enter direction (h/v): ").strip().lower()
+        
+        if direction in ['h', 'v']:
+            place_word(word, row, col, direction)
+            print_grid()
+        else:
+            print("Invalid direction.")
+
+crossword_composer()
