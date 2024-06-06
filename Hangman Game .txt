@@ -1,0 +1,95 @@
+import random
+
+HANGMAN_PICS = [
+    '''
+     +---+
+         |
+         |
+         |
+        ===''', '''
+     +---+
+     O   |
+         |
+         |
+        ===''', '''
+     +---+
+     O   |
+     |   |
+         |
+        ===''', '''
+     +---+
+     O   |
+    /|   |
+         |
+        ===''', '''
+     +---+
+     O   |
+    /|\\  |
+         |
+        ===''', '''
+     +---+
+     O   |
+    /|\\  |
+    /    |
+        ===''', '''
+     +---+
+     O   |
+    /|\\  |
+    / \\  |
+        ==='''
+]
+
+def get_random_word():
+    words = ['python', 'hangman', 'programming', 'challenge', 'developer']
+    return random.choice(words)
+
+def display_state(guessed_word, incorrect_guesses):
+    print(HANGMAN_PICS[incorrect_guesses])
+    print('Current word: ' + ' '.join(guessed_word))
+    print(f'Incorrect guesses: {incorrect_guesses}\n')
+
+def get_guess(guessed_letters):
+    while True:
+        guess = input('Enter a letter: ').lower()
+        if len(guess) != 1 or not guess.isalpha():
+            print('Please enter a single alphabetic character.')
+        elif guess in guessed_letters:
+            print('You have already guessed that letter. Try again.')
+        else:
+            return guess
+
+def update_game_state(word, guessed_word, guess, guessed_letters, incorrect_guesses):
+    guessed_letters.add(guess)
+    if guess in word:
+        for i, letter in enumerate(word):
+            if letter == guess:
+                guessed_word[i] = guess
+    else:
+        incorrect_guesses += 1
+    return incorrect_guesses
+
+def main():
+    word = get_random_word()
+    guessed_word = ['_'] * len(word)
+    guessed_letters = set()
+    incorrect_guesses = 0
+    max_incorrect_guesses = len(HANGMAN_PICS) - 1
+
+    print('Welcome to Hangman!')
+
+    while incorrect_guesses < max_incorrect_guesses and '_' in guessed_word:
+        display_state(guessed_word, incorrect_guesses)
+        guess = get_guess(guessed_letters)
+        incorrect_guesses = update_game_state(word, guessed_word, guess, guessed_letters, incorrect_guesses)
+
+    display_state(guessed_word, incorrect_guesses)
+    if '_' not in guessed_word:
+        print('Congratulations! You guessed the word:', word)
+    else:
+        print('You lost! The word was:', word)
+
+if __name__ == '__main__':
+    main()
+
+
+    
